@@ -1,24 +1,24 @@
 #include "push_swap.h"
 
-void	write_instructions(t_technical *t, char *instruction)
-{
-	char	*old;
+// void	write_instructions(t_technical *t, char *instruction)
+// {
+// 	char	*old;
 
-	old = t->instructions;
-	t->instructions = ft_strjoin(t->instructions, instruction); 
-	if (!t->instructions)
-		exit(error());
-	free(old);
-}
+// 	old = t->instructions;
+// 	t->instructions = ft_strjoin(t->instructions, instruction); 
+// 	if (!t->instructions)
+// 		exit(error());
+// 	free(old);
+// }
 
 void	rotate(t_stack **a, t_technical *t, int stack)
 {
 	t_stack	*tmp;
 
 	if (stack == A)
-		write_instructions(t, RA); // change ' ' on '\n'
+		ft_putstr(RA); // change ' ' on '\n'
 	else if (stack == B)
-		write_instructions(t, RB); // change ' ' on '\n'
+		ft_putstr(RB); // change ' ' on '\n'
 	if (!*a || !(*a)->next)
 		return ;
 	tmp = *a;
@@ -35,9 +35,9 @@ void	r_rotate(t_stack **a, t_technical *t, int stack)
 	t_stack	*head;
 
 	if (stack == A)
-		write_instructions(t, RRA); // change ' ' on '\n'
+		ft_putstr(RRA); // change ' ' on '\n'
 	else if (stack == B)
-		write_instructions(t, RRB); // change ' ' on '\n'
+		ft_putstr(RRB); // change ' ' on '\n'
 	if (!*a || !(*a)->next)
 		return ;
 	tmp = *a;
@@ -67,7 +67,7 @@ void	push(t_stack **a, t_stack **b, t_technical *t, int stack)
 		*a = tmp;
 		t->b_num--;
 		t->a_num++;
-		write_instructions(t, PA); // change ' ' on '\n'
+		ft_putstr(PA); // change ' ' on '\n'
 	}
 	else if (stack == B && *a)
 	{
@@ -77,7 +77,7 @@ void	push(t_stack **a, t_stack **b, t_technical *t, int stack)
 		*b = tmp;
 		t->a_num--;
 		t->b_num++;
-		write_instructions(t, PB); // change ' ' on '\n'
+		ft_putstr(PB); // change ' ' on '\n'
 	}
 }
 
@@ -87,9 +87,9 @@ void	swap(t_stack **a, t_technical *t, int stack)
 	t_stack	*tmp;
 	
 	if (stack == A)
-		write_instructions(t, SA); // change ' ' on '\n'
+		ft_putstr(SA); // change ' ' on '\n'
 	else if (stack == B)
-		write_instructions(t, SB); // change ' ' on '\n'
+		ft_putstr(SB); // change ' ' on '\n'
 	if (t->a_num < 2)
 		return ;
 	tmp = *a;

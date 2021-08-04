@@ -1,13 +1,27 @@
 #include "push_swap.h"
 
-static void	check_doubles(t_stack *a, int val) // mb improve O(n)
+int		is_sorted(t_stack *a, int *arr)
 {
-	while (a && a->next)
+	int		i;
+
+	i = 0;
+	while (a)
 	{
+		if (a->expected_pos != arr[i])
+			return (0);
 		a = a->next;
-		if (a->val == val)
-			exit(error());
+		i++;
 	}
+	return (1);
+}
+
+void	check_doubles(int *arr, int size)
+{
+	size--;
+	while (size--)
+		if (arr[size] == arr[size + 1])
+			exit(error());
+	
 }
 
 static void	check_signs(char *str)
@@ -33,6 +47,5 @@ int		check_argv(t_stack *a, char *str)
 	val = ft_atoi(str);
 	if (val > 2147483647 || val < -2147483648)
 		exit(error());
-	check_doubles(a, (int)val);
 	return ((int)val);
 }

@@ -1,15 +1,51 @@
 #include "push_swap.h"
 
-static void split_b(t_stack **a, t_stack **b, t_technical *t, int curr_mid)
+static int	split_a(t_stack **a, t_stack **b, t_technical *t, int mid)
+{
+	int		rotations;
+	int		k;
+
+	k = (t->a_num + t->b_num) - t->as_alg.wanted_el + 1;
+	rotations = 0;
+	while (k--)
+		if ((*a)->expected_pos > mid)
+		{
+			rotations++;
+			rotate(a, t, A);
+		}
+		else
+			push(a, b, t, B);
+	return (rotations);
+}
+
+static void	align_a(t_stack **a, t_technical *t, int k)
+{
+	int		dir;
+
+	if (k > t->as_alg.wanted_el - 1)
+	{
+		k = t->as_alg.wanted_el - 1;
+		dir = UP;
+	}
+	else
+		dir = DOWN;
+	while (k--)
+		if (dir == UP)
+			rotate(a, t, A);
+		else if (dir == DOWN)
+			r_rotate(a, t, A);
+}
+
+static void	push_or_rotate(t_stack **a, t_stack **b, t_technical *t, int mid)
 {
 	if ((*b)->expected_pos == t->as_alg.wanted_el)
 	{
 		t->as_alg.wanted_el++;
-		(*b)->curr_tag = -1;
+		(*b)->curr_tag = SORTED;
 		push(a, b, t, A);
 		rotate(a, t, A);
 	}
-	else if ((*b)->expected_pos < curr_mid)
+	else if ((*b)->expected_pos < mid)
 		rotate(b, t, B);
 	else
 	{
@@ -18,84 +54,44 @@ static void split_b(t_stack **a, t_stack **b, t_technical *t, int curr_mid)
 	}
 }
 
-static void	sort_b(t_stack **a, t_stack **b, t_technical *t, int curr_mid)
+static void	split_b(t_stack **a, t_stack **b, t_technical *t, int max)
 {
-	int		i;
+	int		mid;
 	int		k;
 
 	while (*b)
 	{
+		mid = (max - t->as_alg.wanted_el) / 2 + t->as_alg.wanted_el;
 		t->as_alg.global_tag++;
-		curr_mid = (curr_mid - t->as_alg.wanted_el) / 2 + t->as_alg.wanted_el;
-		i = -1;
-		k = t->b_num;
-		while (++i < k) // ???
-			split_b(a, b, t, curr_mid);
+		k = t->b_num; //?
+		while (k--)
+			push_or_rotate(a, b, t, mid);
 	}
 }
 
-static int	find_max(t_stack *tmp)
+static void	move_tagged(t_stack **a, t_stack **b, t_technical *t, int tag)
 {
-	int		max;
-
-	max = 0;
-	while (tmp)
-	{
-		if (tmp->expected_pos > max)
-			max = tmp->expected_pos;
-		tmp = tmp->next;
-	}
-	return (max);
-}
-
-static void	push_tagged_back(t_stack **a, t_stack **b, t_technical *t)
-{
-	int		curr_tag;
-
-	curr_tag = (*a)->curr_tag;
-	while (curr_tag && curr_tag != -1)
-	{
-		curr_tag = (*a)->curr_tag;
-		while ((*a)->curr_tag == curr_tag)
-			push(a, b, t, B);
-		sort_b(a, b, t, find_max(*b));
-		curr_tag = (*a)->curr_tag;
-	}
+	while ((*a)->curr_tag == tag)
+		push(a, b, t, B);
 }
 
 void	asipes_algorithm(t_stack **a, t_stack **b, t_technical *t)
 {
-	int		i;
-	int		rotations;
+	int		max;
+	int		mid;
+	int 	rotations;
 
-	t->as_alg.curr_max = t->a_num;
-	t->as_alg.curr_mid = t->a_num / 2 + 1;
-	i = -1;
-	while (++i < t->a_num + t->b_num) //spin in right direction and don't over spin if all els were moved
-		if ((*a)->expected_pos > t->as_alg.curr_mid)
-			rotate(a, t, A);
-		else
-			push(a, b, t, B);
-	sort_b(a, b, t, t->as_alg.curr_mid);
-	// change mid
-	push_tagged_back(a, b, t);
-	rotations = 0;
-	while (t->as_alg.wanted_el != t->a_num + t->b_num + 1)
+	max = t->a_num;
+	while (mid < max)
 	{
-		while ((*a)->curr_tag != -1 && t->as_alg.wanted_el != t->a_num + t->b_num + 1) //spin in right direction and don't over spin if all els were moved
+		mid = (max - t->as_alg.wanted_el) / 2 + t->as_alg.wanted_el;
+		rotations = split_a(a, b, t, mid);
+		align_a(a, t, rotations);
+		split_b(a, b, t, mid);
+		while ((*a)->curr_tag != DEFAULT && (*a)->curr_tag != SORTED)
 		{
-			t->as_alg.curr_mid = (t->as_alg.curr_max - t->as_alg.wanted_el) / 2 + t->as_alg.wanted_el;
-			if ((*a)->expected_pos > t->as_alg.curr_mid)
-			{
-				rotate(a, t, A);
-				rotations++;
-			}
-			else
-				push(a, b, t, B);
+			move_tagged(a, b, t, (*a)->curr_tag);
+			split_b(a, b, t, mid);
 		}
-		while (rotations--)
-			r_rotate(a, t, A); // opt
-		sort_b(a, b, t, t->as_alg.curr_mid);
-		push_tagged_back(a, b, t);
 	}
 }

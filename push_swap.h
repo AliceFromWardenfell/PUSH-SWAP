@@ -3,9 +3,10 @@
 
 # define A 1
 # define B 0
-
 # define UP 1
 # define DOWN 0
+# define DEFAULT -1
+# define SORTED -2
 
 # define SA "sa\n" // ??
 # define SB	"sb\n"
@@ -32,8 +33,6 @@ typedef	struct		s_as_alg
 {
 	int				wanted_el;
 	int				global_tag;
-	int				curr_max;
-	int				curr_mid;
 }					t_as_alg;
 
 typedef	struct		s_technical

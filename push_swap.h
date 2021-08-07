@@ -24,13 +24,17 @@ typedef	struct		s_stack
 {
 	int				val;
 	int				expected_pos;
+	int				curr_tag;
 	struct s_stack	*next;
 }					t_stack;
 
-typedef	struct		s_alg_1
+typedef	struct		s_as_alg
 {
-	int				next;
-}					t_alg_1;
+	int				wanted_el;
+	int				global_tag;
+	int				curr_max;
+	int				curr_mid;
+}					t_as_alg;
 
 typedef	struct		s_technical
 {
@@ -39,7 +43,7 @@ typedef	struct		s_technical
 	char			*instructions;
 	int				*original_arr; //rm
 	int				*sorted_arr;
-	struct s_alg_1	alg_1;
+	struct s_as_alg	as_alg;
 }					t_technical;
 
 t_stack	*create_node(int val);
@@ -57,7 +61,8 @@ void	rotate(t_stack **a, t_technical *t, int stack);
 void	r_rotate(t_stack **a, t_technical *t, int stack);
 void	alg1(t_stack **a, t_stack **b, t_technical *t); // perhaps tmp
 void	algorithm_1(t_stack **a, t_stack **b, t_technical *t); // ?
-void	radix(t_stack **a, t_stack **b, t_technical *t);
+void	radix_algorithm(t_stack **a, t_stack **b, t_technical *t);
+void	asipes_algorithm(t_stack **a, t_stack **b, t_technical *t);
 void	clean(t_stack **a, t_stack **b, t_technical *t);
 void	heap_sort(int *arr, int arr_size);
 

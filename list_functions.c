@@ -11,6 +11,7 @@ t_stack	*create_node(int val)
 	{
 		tmp->val = val;
 		tmp->next = NULL;
+		tmp->curr_tag = 0;
 	}
 	return (tmp);
 }

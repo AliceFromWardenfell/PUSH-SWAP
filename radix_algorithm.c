@@ -74,7 +74,7 @@ static void	push_or_rotate(t_stack **a, t_stack **b, t_technical *t, int i)
 	}
 }
 
-void	radix(t_stack **a, t_stack **b, t_technical *t)
+void	radix_algorithm(t_stack **a, t_stack **b, t_technical *t)
 {
 	int		amount_of_digits;
 	int		i;

@@ -25,9 +25,11 @@ static void	fill_stack_and_arr(t_stack **a, t_technical *t, int argc, char **arg
 }
 
 void	init(t_stack **a, t_stack **b, t_technical *t)
-{
+{	
 	*a = NULL;
 	*b = NULL;
+	t->as_alg.global_tag = 0;
+	t->as_alg.wanted_el = 1;
 	t->instructions = malloc(sizeof(char)); // !!!
 	if (!t->instructions)
 		exit(error());
@@ -77,9 +79,9 @@ int		main(int argc, char **argv)
 		// print_arr(t.original_arr, t.a_num);
 
 		// printf("Trying 1st algorithm...\n");
-		radix(&a, &b, &t);
+		// radix_algorithm(&a, &b, &t);
 
-		
+		asipes_algorithm(&a, &b, &t);
 		// printf("1st algorithm has been successfully finished.\n");
 		
 		// print_ab(a, b, &t);

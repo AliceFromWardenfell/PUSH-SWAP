@@ -18,7 +18,7 @@ static int	split_a(t_stack **a, t_stack **b, t_technical *t, int mid)
 	return (rotations);
 }
 
-static void	align_a(t_stack **a, t_technical *t, int k)
+static void	align_a(t_stack **a, t_stack **b, t_technical *t, int k)
 {
 	int		dir;
 
@@ -31,9 +31,17 @@ static void	align_a(t_stack **a, t_technical *t, int k)
 		dir = DOWN;
 	while (k--)
 		if (dir == UP)
+		{
 			rotate(a, t, A);
+			if ((*b)->expected_pos != t->as_alg.wanted_el)
+				rotate(b, t, B);
+		}
 		else if (dir == DOWN)
+		{
 			r_rotate(a, t, A);
+			if ((*b)->expected_pos != t->as_alg.wanted_el)
+				r_rotate(b, t, B);
+		}
 }
 
 static void	push_or_rotate(t_stack **a, t_stack **b, t_technical *t, int mid)
@@ -86,7 +94,7 @@ void	asipes_algorithm(t_stack **a, t_stack **b, t_technical *t)
 	{
 		mid = (max - t->as_alg.wanted_el) / 2 + t->as_alg.wanted_el;
 		rotations = split_a(a, b, t, mid);
-		align_a(a, t, rotations);
+		align_a(a, b, t, rotations);
 		split_b(a, b, t, mid);
 		while ((*a)->curr_tag != DEFAULT && (*a)->curr_tag != SORTED)
 		{

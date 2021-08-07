@@ -24,16 +24,20 @@ static void	fill_stack_and_arr(t_stack **a, t_technical *t, int argc, char **arg
 	t->b_num = 0;
 }
 
-void	init(t_stack **a, t_stack **b, t_technical *t)
+void	init(t_stack **a, t_stack **b, t_technical *t, int argc)
 {	
 	*a = NULL;
 	*b = NULL;
 	t->as_alg.global_tag = 0;
 	t->as_alg.wanted_el = 1;
-	t->instructions = malloc(sizeof(char)); // !!!
+	t->instructions = (char *)malloc(argc * 10 * 4 * sizeof(char)); // !!!
+	// printf("allocated %ld bytes\n", argc * 10 * 4 * sizeof(char)); //rm
 	if (!t->instructions)
 		exit(error());
 	*t->instructions = '\0';
+	t->amount_of_instructions = 0;
+	t->amount_of_allmem = argc * 10 * 4 * sizeof(char);
+	t->last_inst_position = 0;
 }
 
 void	assign_expected_positions(t_stack *a, t_technical *t)
@@ -56,7 +60,7 @@ int		main(int argc, char **argv)
 	t_stack		*b;
 	t_technical t;
 
-	init(&a, &b, &t);
+	init(&a, &b, &t, argc); // handle init and clean; move them
 	if (argc > 1)
 	{
 		// printf("Loading arguments into stack and array...\n");
@@ -79,9 +83,9 @@ int		main(int argc, char **argv)
 		// print_arr(t.original_arr, t.a_num);
 
 		// printf("Trying 1st algorithm...\n");
-		// radix_algorithm(&a, &b, &t);
+		radix_algorithm(&a, &b, &t);
 
-		asipes_algorithm(&a, &b, &t);
+		// asipes_algorithm(&a, &b, &t);
 		// printf("1st algorithm has been successfully finished.\n");
 		
 		// print_ab(a, b, &t);

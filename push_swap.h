@@ -40,6 +40,9 @@ typedef	struct		s_technical
 	int				a_num;
 	int				b_num;
 	char			*instructions;
+	int				amount_of_instructions;
+	int				amount_of_allmem;
+	int				last_inst_position;
 	int				*original_arr; //rm
 	int				*sorted_arr;
 	struct s_as_alg	as_alg;

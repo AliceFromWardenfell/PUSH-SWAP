@@ -88,13 +88,13 @@ int		main(int argc, char **argv)
 
 		asipes_algorithm(&a, &b, &t);
 		// printf("1st algorithm has been successfully finished.\n");
-		
+
 		// print_ab(a, b, &t);
-	
+
 		inst_compress(t.inst);
 		// printf("Instructions:\n"); // change ' ' on '\n' and remove '\n' in the end
 		// printf("%s", t.instructions);
-		print_instructions(t.inst);
+		// print_instructions(t.inst);
 	}
 	clean(&a, &b, &t);
 	// leaks

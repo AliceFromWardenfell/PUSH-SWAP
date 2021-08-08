@@ -8,6 +8,7 @@ static int	split_a(t_stack **a, t_stack **b, t_technical *t, int mid)
 	k = (t->a_num + t->b_num) - t->as_alg.wanted_el + 1;
 	rotations = 0;
 	while (k--)
+	{//rm
 		if ((*a)->expected_pos > mid)
 		{
 			rotations++;
@@ -15,6 +16,8 @@ static int	split_a(t_stack **a, t_stack **b, t_technical *t, int mid)
 		}
 		else
 			push(a, b, t, B);
+		print_ab(*a, *b, t);//rm
+	} //rm
 	return (rotations);
 }
 
@@ -33,14 +36,22 @@ static void	align_a(t_stack **a, t_stack **b, t_technical *t, int k)
 		if (dir == UP)
 		{
 			rotate(a, t, A);
+			print_ab(*a, *b, t);// rm
 			if ((*b)->expected_pos != t->as_alg.wanted_el)
+			{// rm
 				rotate(b, t, B);
+				print_ab(*a, *b, t);// rm
+			}// rm
 		}
 		else if (dir == DOWN)
 		{
 			r_rotate(a, t, A);
+			print_ab(*a, *b, t);// rm
 			if ((*b)->expected_pos != t->as_alg.wanted_el)
+			{// rm
 				r_rotate(b, t, B);
+				print_ab(*a, *b, t); // rm
+			}// rm
 		}
 }
 
@@ -51,14 +62,20 @@ static void	push_or_rotate(t_stack **a, t_stack **b, t_technical *t, int mid)
 		t->as_alg.wanted_el++;
 		(*b)->curr_tag = SORTED;
 		push(a, b, t, A);
+		print_ab(*a, *b, t);
 		rotate(a, t, A);
+		print_ab(*a, *b, t);//rm
 	}
 	else if ((*b)->expected_pos < mid)
+	{//rm
 		rotate(b, t, B);
+		print_ab(*a, *b, t);//rm
+	}//rm
 	else
 	{
 		(*b)->curr_tag = t->as_alg.global_tag;
 		push(a, b, t, A);
+		print_ab(*a, *b, t); //rm
 	}
 }
 
@@ -80,7 +97,10 @@ static void	split_b(t_stack **a, t_stack **b, t_technical *t, int max)
 static void	move_tagged(t_stack **a, t_stack **b, t_technical *t, int tag)
 {
 	while ((*a)->curr_tag == tag)
+	{//rm
 		push(a, b, t, B);
+		print_ab(*a, *b, t); //rm
+	}//rm
 }
 
 void	asipes_algorithm(t_stack **a, t_stack **b, t_technical *t)

@@ -4,20 +4,26 @@ static int	split_a(t_stack **a, t_stack **b, t_technical *t, int mid)
 {
 	int		rotations;
 	int		k;
+	int		rotated;
 
+	rotated = 0;
 	k = (t->a_num + t->b_num) - t->as_alg.wanted_el + 1;
 	rotations = 0;
 	while (k--)
-	{//rm
-		if ((*a)->expected_pos > mid)
+		if (((*a)->expected_pos == t->as_alg.wanted_el) && !rotated)
+		{
+			t->as_alg.wanted_el++;
+			(*a)->curr_tag = SORTED;
+			rotate(a, t, A);
+		}
+		else if ((*a)->expected_pos > mid)
 		{
 			rotations++;
 			rotate(a, t, A);
+			rotated = 1;
 		}
 		else
 			push(a, b, t, B);
-		print_ab(*a, *b, t);//rm
-	} //rm
 	return (rotations);
 }
 
@@ -36,22 +42,14 @@ static void	align_a(t_stack **a, t_stack **b, t_technical *t, int k)
 		if (dir == UP)
 		{
 			rotate(a, t, A);
-			print_ab(*a, *b, t);// rm
 			if ((*b)->expected_pos != t->as_alg.wanted_el)
-			{// rm
 				rotate(b, t, B);
-				print_ab(*a, *b, t);// rm
-			}// rm
 		}
 		else if (dir == DOWN)
 		{
 			r_rotate(a, t, A);
-			print_ab(*a, *b, t);// rm
-			if ((*b)->expected_pos != t->as_alg.wanted_el)
-			{// rm
+			if (*b && (*b)->expected_pos != t->as_alg.wanted_el)
 				r_rotate(b, t, B);
-				print_ab(*a, *b, t); // rm
-			}// rm
 		}
 }
 
@@ -62,20 +60,14 @@ static void	push_or_rotate(t_stack **a, t_stack **b, t_technical *t, int mid)
 		t->as_alg.wanted_el++;
 		(*b)->curr_tag = SORTED;
 		push(a, b, t, A);
-		print_ab(*a, *b, t);
 		rotate(a, t, A);
-		print_ab(*a, *b, t);//rm
 	}
-	else if ((*b)->expected_pos < mid)
-	{//rm
+	else if ((*b)->expected_pos < mid) // add -1 and check generator
 		rotate(b, t, B);
-		print_ab(*a, *b, t);//rm
-	}//rm
 	else
 	{
 		(*b)->curr_tag = t->as_alg.global_tag;
 		push(a, b, t, A);
-		print_ab(*a, *b, t); //rm
 	}
 }
 
@@ -97,10 +89,7 @@ static void	split_b(t_stack **a, t_stack **b, t_technical *t, int max)
 static void	move_tagged(t_stack **a, t_stack **b, t_technical *t, int tag)
 {
 	while ((*a)->curr_tag == tag)
-	{//rm
 		push(a, b, t, B);
-		print_ab(*a, *b, t); //rm
-	}//rm
 }
 
 void	asipes_algorithm(t_stack **a, t_stack **b, t_technical *t)

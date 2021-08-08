@@ -68,7 +68,7 @@ void	print_ab(t_stack *a, t_stack *b, t_technical *t); // remove
 void	print_arr(int *a, int size); // remove
 int		error(void);
 int		check_argv(t_stack *a, char *str);
-void	check_doubles(int *arr, int size);
+void	check_doubles(int *arr, int size, int sorted);
 int		is_sorted(t_stack *a, int *arr);
 void	swap(t_stack **a, t_technical *t, int stack);
 void	push(t_stack **a, t_stack **b, t_technical *t, int stack);
@@ -78,6 +78,9 @@ void	alg1(t_stack **a, t_stack **b, t_technical *t); // perhaps tmp
 void	algorithm_1(t_stack **a, t_stack **b, t_technical *t); // ?
 void	radix_algorithm(t_stack **a, t_stack **b, t_technical *t);
 void	asipes_algorithm(t_stack **a, t_stack **b, t_technical *t);
+void	sort_3(t_stack **s, t_technical *t, int stack);
+void	sort_4(t_stack **a, t_stack **b, t_technical *t, int num);
+void	sort_5(t_stack **a, t_stack **b, t_technical *t);
 void	inst_compress(t_inst *lst);
 void	print_instructions(t_inst *inst);
 void	clean(t_stack **a, t_stack **b, t_technical *t);

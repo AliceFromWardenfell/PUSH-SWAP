@@ -6,6 +6,8 @@ static int	change_two_on_one(t_inst **lst, t_inst **next, char *instruction)
 	t_inst *next_to_free;
 	t_inst *tmp;
 
+	if (!(*lst)->prev || !(*next)->next)
+		return(0);
 	lst_to_free = *lst;
 	next_to_free = *next;
 	*lst = (*lst)->prev;
@@ -27,6 +29,8 @@ static int	remove_two(t_inst **lst, t_inst **next)
 	t_inst *lst_to_free;
 	t_inst *next_to_free;
 
+	if (!(*lst)->prev || !(*next)->next)
+		return(0);
 	lst_to_free = *lst;
 	next_to_free = *next;
 	*lst = (*lst)->prev;

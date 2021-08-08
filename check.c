@@ -15,13 +15,13 @@ int		is_sorted(t_stack *a, int *arr)
 	return (1);
 }
 
-void	check_doubles(int *arr, int size)
+void	check_doubles(int *arr, int size, int sorted)
 {
-	size--;
 	while (size--)
 		if (arr[size] == arr[size + 1])
 			exit(error());
-	
+	if (sorted)
+		exit(0);
 }
 
 static void	check_signs(char *str)

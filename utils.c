@@ -2,13 +2,9 @@
 
 void	print_instructions(t_inst *inst)
 {
-	int		i; //rm
-
-	i = 1;//rm
 	while (inst)
 	{
-		printf("%d. %s", i, inst->instruction);
-		i++;//rm
+		printf("%s", inst->instruction);
 		inst = inst->next;
 	}
 }
@@ -41,11 +37,8 @@ void	print_list(t_stack *a, t_technical *t, int stack)
 		printf("(%d)\n", t->b_num);
 }
 
-int	i = 1; //rm
-
 void	print_ab(t_stack *a, t_stack *b, t_technical *t)
 {
-	printf("%d.\n", i++);
 	printf("\n");
 	print_list(a, t, A);
 	print_list(b, t, B);

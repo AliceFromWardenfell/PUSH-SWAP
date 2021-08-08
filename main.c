@@ -68,7 +68,7 @@ int		main(int argc, char **argv)
 		fill_stack_and_arr(&a, &t, argc, argv); // O(n^2)
 		// printf("Stack and array has been successfully filled.\n");
 
-		// print_arr(t.sorted_arr, t.a_num);
+		// print_arr(t.sorted_arr, t.a_num);s
 
 		// printf("Sorting array...\n");
 		heap_sort(t.sorted_arr, t.a_num);
@@ -90,7 +90,8 @@ int		main(int argc, char **argv)
 		// printf("1st algorithm has been successfully finished.\n");
 		
 		// print_ab(a, b, &t);
-
+	
+		inst_compress(t.inst);
 		// printf("Instructions:\n"); // change ' ' on '\n' and remove '\n' in the end
 		// printf("%s", t.instructions);
 		print_instructions(t.inst);

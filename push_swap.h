@@ -10,12 +10,15 @@
 
 # define SA "sa\n" // ??
 # define SB	"sb\n"
+# define SS "ss\n"
 # define PA "pa\n"
 # define PB "pb\n"
 # define RA "ra\n"
 # define RB "rb\n"
+# define RR "rr\n"
 # define RRA "rra\n"
 # define RRB "rrb\n"
+# define RRR "rrr\n"
 
 # include "libft/libft.h"
 
@@ -39,6 +42,7 @@ typedef	struct		s_inst
 {
 	char			*instruction;
 	struct s_inst	*next;
+	struct s_inst	*prev;
 }					t_inst;
 
 typedef	struct		s_technical
@@ -74,6 +78,7 @@ void	alg1(t_stack **a, t_stack **b, t_technical *t); // perhaps tmp
 void	algorithm_1(t_stack **a, t_stack **b, t_technical *t); // ?
 void	radix_algorithm(t_stack **a, t_stack **b, t_technical *t);
 void	asipes_algorithm(t_stack **a, t_stack **b, t_technical *t);
+void	inst_compress(t_inst *lst);
 void	print_instructions(t_inst *inst);
 void	clean(t_stack **a, t_stack **b, t_technical *t);
 void	heap_sort(int *arr, int arr_size);

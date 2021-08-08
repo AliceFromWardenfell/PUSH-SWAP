@@ -10,6 +10,8 @@ t_inst	*create_inst_node(char* val)
 	if (tmp)
 	{
 		tmp->instruction = val;
+		tmp->next = NULL;
+		tmp->prev = NULL;
 	}
 	return (tmp);
 }
@@ -29,6 +31,7 @@ void	addinstnode_back(t_inst **lst, t_inst *new)
 		tmp = tmp->next;
 	tmp->next = new;
 	new->next = NULL;
+	new->prev = tmp;
 }
 
 t_stack	*create_node(int val)

@@ -38,6 +38,7 @@ void	init(t_stack **a, t_stack **b, t_technical *t, int argc)
 	t->amount_of_instructions = 0;
 	t->amount_of_allmem = argc * 10 * 4 * sizeof(char);
 	t->last_inst_position = 0;
+	t->inst = NULL;
 }
 
 void	assign_expected_positions(t_stack *a, t_technical *t)
@@ -83,15 +84,16 @@ int		main(int argc, char **argv)
 		// print_arr(t.original_arr, t.a_num);
 
 		// printf("Trying 1st algorithm...\n");
-		radix_algorithm(&a, &b, &t);
+		// radix_algorithm(&a, &b, &t);
 
-		// asipes_algorithm(&a, &b, &t);
+		asipes_algorithm(&a, &b, &t);
 		// printf("1st algorithm has been successfully finished.\n");
 		
 		// print_ab(a, b, &t);
 
 		// printf("Instructions:\n"); // change ' ' on '\n' and remove '\n' in the end
 		// printf("%s", t.instructions);
+		print_instructions(t.inst);
 	}
 	clean(&a, &b, &t);
 	// leaks

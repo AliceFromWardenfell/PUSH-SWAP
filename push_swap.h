@@ -35,6 +35,12 @@ typedef	struct		s_as_alg
 	int				global_tag;
 }					t_as_alg;
 
+typedef	struct		s_inst
+{
+	char			*instruction;
+	struct s_inst	*next;
+}					t_inst;
+
 typedef	struct		s_technical
 {
 	int				a_num;
@@ -46,10 +52,13 @@ typedef	struct		s_technical
 	int				*original_arr; //rm
 	int				*sorted_arr;
 	struct s_as_alg	as_alg;
+	struct s_inst	*inst;
 }					t_technical;
 
 t_stack	*create_node(int val);
 void	addnode_back(t_stack **lst, t_stack *new);
+t_inst	*create_inst_node(char* val);
+void	addinstnode_back(t_inst **lst, t_inst *new);
 void	print_list(t_stack *a, t_technical *t, int flag); // remove
 void	print_ab(t_stack *a, t_stack *b, t_technical *t); // remove
 void	print_arr(int *a, int size); // remove
@@ -65,6 +74,7 @@ void	alg1(t_stack **a, t_stack **b, t_technical *t); // perhaps tmp
 void	algorithm_1(t_stack **a, t_stack **b, t_technical *t); // ?
 void	radix_algorithm(t_stack **a, t_stack **b, t_technical *t);
 void	asipes_algorithm(t_stack **a, t_stack **b, t_technical *t);
+void	print_instructions(t_inst *inst);
 void	clean(t_stack **a, t_stack **b, t_technical *t);
 void	heap_sort(int *arr, int arr_size);
 

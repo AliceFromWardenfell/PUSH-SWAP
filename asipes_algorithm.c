@@ -89,6 +89,7 @@ void	asipes_algorithm(t_stack **a, t_stack **b, t_technical *t)
 	int		mid;
 	int 	rotations;
 
+	mid = 0;
 	max = t->a_num;
 	while (mid < max)
 	{

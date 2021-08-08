@@ -1,5 +1,14 @@
 #include "push_swap.h"
 
+void	print_instructions(t_inst *inst)
+{
+	while (inst)
+	{
+		printf("%s", inst->instruction);
+		inst = inst->next;
+	}
+}
+
 void	print_arr(int *a, int size)
 {
 	int		i;

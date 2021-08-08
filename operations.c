@@ -1,31 +1,8 @@
 #include "push_swap.h"
 
-static void	ft_realloc(t_technical *t)
+void	write_instructions(t_technical *t, char *instruction) // free it
 {
-	char	*old;
-
-	t->amount_of_allmem += t->amount_of_allmem / 10;
-	old = t->instructions;
-	t->instructions = (char *)malloc(t->amount_of_allmem);
-	printf("using %d bytes\n", t->last_inst_position); //rm
-	printf("allocated %d bytes\n", t->amount_of_allmem); //rm
-	if (!t->instructions)
-		exit(error());
-	ft_memcpy(t->instructions, old, t->last_inst_position);
-	free(old);
-}
-
-void	write_instructions(t_technical *t, char *instruction)
-{
-	int		inst_len;
-
-	t->amount_of_instructions++;
-	if (t->last_inst_position >= t->amount_of_allmem)
-		ft_realloc(t);
-	inst_len = ft_strlen(instruction) * sizeof(char);
-	ft_memcpy(&(t->instructions[t->last_inst_position]), instruction, inst_len); //rm ()
-	t->last_inst_position += inst_len;
-	t->instructions[t->last_inst_position] = '\0';
+	addinstnode_back(&t->inst, create_inst_node(instruction));
 }
 
 void	rotate(t_stack **a, t_technical *t, int stack)

@@ -6,11 +6,13 @@ static int	split_a(t_stack **a, t_stack **b, t_technical *t, int mid)
 	int		k;
 	int		rotated;
 	int		next_mid;
+	int		below_mid;
 
 	rotated = 0;
 	k = (t->a_num + t->b_num) - t->as_alg.wanted_el + 1;
+	below_mid = (k + 1) / 2;
 	rotations = 0;
-	while (k--)
+	while (k-- && below_mid)
 		if (((*a)->expected_pos == t->as_alg.wanted_el) && !rotated)
 		{
 			t->as_alg.wanted_el++;
@@ -27,7 +29,10 @@ static int	split_a(t_stack **a, t_stack **b, t_technical *t, int mid)
 			rotated = 1;
 		}
 		else
+		{
+			below_mid--;
 			push(a, b, t, B);
+		}
 	return (rotations);
 }
 

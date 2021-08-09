@@ -5,6 +5,7 @@ static int	split_a(t_stack **a, t_stack **b, t_technical *t, int mid)
 	int		rotations;
 	int		k;
 	int		rotated;
+	int		next_mid;
 
 	rotated = 0;
 	k = (t->a_num + t->b_num) - t->as_alg.wanted_el + 1;
@@ -18,8 +19,11 @@ static int	split_a(t_stack **a, t_stack **b, t_technical *t, int mid)
 		}
 		else if ((*a)->expected_pos > mid)
 		{
+			next_mid = (mid - t->as_alg.wanted_el) / 2 + t->as_alg.wanted_el;
 			rotations++;
 			rotate(a, t, A);
+			if (*b && (*b)->expected_pos < next_mid)
+				rotate(b, t, B);
 			rotated = 1;
 		}
 		else
@@ -83,26 +87,9 @@ static void	split_b(t_stack **a, t_stack **b, t_technical *t, int max)
 		t->as_alg.global_tag++;
 		k = t->b_num; //?
 		while (k--)
-		{
 			push_or_rotate(a, b, t, mid);
-			// if (!k && t->b_num == 3)
-			// {
-			// 	sort_3(b, t, B);
-				
-			// 	t->as_alg.wanted_el++;
-			// 	(*b)->curr_tag = SORTED;
-			// 	push(a, b, t, A);
-			// 	rotate(a, t, A);
-			// 	t->as_alg.wanted_el++;
-			// 	(*b)->curr_tag = SORTED;
-			// 	push(a, b, t, A);
-			// 	rotate(a, t, A);
-			// 	t->as_alg.wanted_el++;
-			// 	(*b)->curr_tag = SORTED;
-			// 	push(a, b, t, A);
-			// 	rotate(a, t, A);
-			// }
-		}
+		if (t->b_num == 3)
+			sort_3_b(a, b, t);
 	}
 }
 

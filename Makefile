@@ -17,6 +17,7 @@ SRCS	=	main.c \
 			radix_algorithm.c \
 			asipes_algorithm.c \
 			small_sorts.c \
+			sort_3_b.c \
 			compress.c
 
 OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRCS))

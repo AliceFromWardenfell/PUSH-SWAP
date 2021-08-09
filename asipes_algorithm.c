@@ -62,7 +62,7 @@ static void	push_or_rotate(t_stack **a, t_stack **b, t_technical *t, int mid)
 		push(a, b, t, A);
 		rotate(a, t, A);
 	}
-	else if ((*b)->expected_pos < mid) // add -1 and check generator
+	else if ((*b)->expected_pos < mid) // add -1 or make <= and check generator
 		rotate(b, t, B);
 	else
 	{
@@ -83,7 +83,26 @@ static void	split_b(t_stack **a, t_stack **b, t_technical *t, int max)
 		t->as_alg.global_tag++;
 		k = t->b_num; //?
 		while (k--)
+		{
 			push_or_rotate(a, b, t, mid);
+			// if (!k && t->b_num == 3)
+			// {
+			// 	sort_3(b, t, B);
+				
+			// 	t->as_alg.wanted_el++;
+			// 	(*b)->curr_tag = SORTED;
+			// 	push(a, b, t, A);
+			// 	rotate(a, t, A);
+			// 	t->as_alg.wanted_el++;
+			// 	(*b)->curr_tag = SORTED;
+			// 	push(a, b, t, A);
+			// 	rotate(a, t, A);
+			// 	t->as_alg.wanted_el++;
+			// 	(*b)->curr_tag = SORTED;
+			// 	push(a, b, t, A);
+			// 	rotate(a, t, A);
+			// }
+		}
 	}
 }
 

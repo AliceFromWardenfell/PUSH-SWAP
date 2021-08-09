@@ -28,7 +28,10 @@ void	addinstnode_back(t_inst **lst, t_inst *new)
 	}
 	tmp = *lst;
 	while (tmp->next)
+	{
+		// printf("\n%s ", tmp->instruction);
 		tmp = tmp->next;
+	}
 	tmp->next = new;
 	new->next = NULL;
 	new->prev = tmp;

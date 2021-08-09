@@ -2,7 +2,7 @@
 
 void	write_instructions(t_technical *t, char *instruction) // free it
 {
-	addinstnode_back(&t->inst, create_inst_node(instruction));
+	addinstnode_back(&(t->inst), create_inst_node(instruction));
 }
 
 void	rotate(t_stack **a, t_technical *t, int stack)

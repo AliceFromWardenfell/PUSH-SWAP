@@ -79,6 +79,7 @@ void	algorithm_1(t_stack **a, t_stack **b, t_technical *t); // ?
 void	radix_algorithm(t_stack **a, t_stack **b, t_technical *t);
 void	asipes_algorithm(t_stack **a, t_stack **b, t_technical *t);
 void	sort_3_b(t_stack **a, t_stack **b, t_technical *t);
+void	sort_2_b(t_stack **a, t_stack **b, t_technical *t);
 void	sort_3(t_stack **s, t_technical *t, int stack);
 void	sort_4(t_stack **a, t_stack **b, t_technical *t, int num);
 void	sort_5(t_stack **a, t_stack **b, t_technical *t);

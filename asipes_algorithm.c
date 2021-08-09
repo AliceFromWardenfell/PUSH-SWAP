@@ -24,7 +24,7 @@ static int	split_a(t_stack **a, t_stack **b, t_technical *t, int mid)
 			next_mid = (mid - t->as_alg.wanted_el) / 2 + t->as_alg.wanted_el;
 			rotations++;
 			rotate(a, t, A);
-			if (*b && (*b)->expected_pos < next_mid)
+			if (*b && (*b)->expected_pos < next_mid && (*b)->expected_pos != t->as_alg.wanted_el)
 				rotate(b, t, B);
 			rotated = 1;
 		}
@@ -95,6 +95,8 @@ static void	split_b(t_stack **a, t_stack **b, t_technical *t, int max)
 			push_or_rotate(a, b, t, mid);
 		if (t->b_num == 3)
 			sort_3_b(a, b, t);
+		if (t->b_num == 2)
+			sort_2_b(a, b, t);
 	}
 }
 

@@ -40,7 +40,7 @@ static void	align_a(t_stack **a, t_stack **b, t_technical *t, int k)
 {
 	int		dir;
 
-	if (k > t->as_alg.wanted_el - 1)
+	if (k > t->as_alg.wanted_el - 1) // is this efficient?
 	{
 		k = t->as_alg.wanted_el - 1;
 		dir = UP;
@@ -103,7 +103,16 @@ static void	split_b(t_stack **a, t_stack **b, t_technical *t, int max)
 static void	move_tagged(t_stack **a, t_stack **b, t_technical *t, int tag)
 {
 	while ((*a)->curr_tag == tag)
-		push(a, b, t, B);
+	{
+		if ((*a)->expected_pos == t->as_alg.wanted_el)
+		{
+			(*a)->curr_tag = SORTED;
+			rotate(a, t, A);
+			t->as_alg.wanted_el++;
+		}
+		else
+			push(a, b, t, B);
+	}
 }
 
 void	asipes_algorithm(t_stack **a, t_stack **b, t_technical *t)

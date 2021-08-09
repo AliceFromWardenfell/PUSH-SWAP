@@ -79,6 +79,7 @@ static void	split_b(t_stack **a, t_stack **b, t_technical *t, int max)
 	while (*b)
 	{
 		mid = (max - t->as_alg.wanted_el) / 2 + t->as_alg.wanted_el;
+		max = mid;
 		t->as_alg.global_tag++;
 		k = t->b_num; //?
 		while (k--)

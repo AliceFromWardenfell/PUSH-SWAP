@@ -4,7 +4,7 @@ static void	align_a(t_stack **a, t_stack **b, t_technical *t, int k)
 {
 	int		dir;
 
-	if (k > t->as_alg.wanted_el - 1) // is this efficient?
+	if (k > t->as_alg.wanted_el - 1)
 	{
 		k = t->as_alg.wanted_el - 1;
 		dir = UP;
@@ -12,6 +12,7 @@ static void	align_a(t_stack **a, t_stack **b, t_technical *t, int k)
 	else
 		dir = DOWN;
 	while (k--)
+	{
 		if (dir == UP)
 		{
 			rotate(a, t, A);
@@ -24,6 +25,7 @@ static void	align_a(t_stack **a, t_stack **b, t_technical *t, int k)
 			if (*b && (*b)->expected_pos != t->as_alg.wanted_el)
 				r_rotate(b, t, B);
 		}
+	}
 }
 
 static void	push_or_rotate(t_stack **a, t_stack **b, t_technical *t, int mid)
@@ -54,7 +56,7 @@ static void	split_b(t_stack **a, t_stack **b, t_technical *t, int max)
 		mid = (max - t->as_alg.wanted_el) / 2 + t->as_alg.wanted_el;
 		max = mid;
 		t->as_alg.global_tag++;
-		k = t->b_num; //?
+		k = t->b_num;
 		while (k--)
 			push_or_rotate(a, b, t, mid);
 		if (t->b_num == 3)
@@ -83,7 +85,7 @@ void	asipes_algorithm(t_stack **a, t_stack **b, t_technical *t)
 {
 	int		max;
 	int		mid;
-	int 	rotations;
+	int		rotations;
 
 	mid = 0;
 	max = t->a_num;

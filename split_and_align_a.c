@@ -7,7 +7,8 @@ static void	found(t_stack **a, t_technical *t)
 	rotate(a, t, A);
 }
 
-static void	less_then_mid(t_stack **a, t_stack **b, t_technical *t, int *below_mid)
+static void	less_then_mid(t_stack **a, t_stack **b,
+						t_technical *t, int *below_mid)
 {
 	(*below_mid)--;
 	push(a, b, t, B);
@@ -37,11 +38,11 @@ int	split_a(t_stack **a, t_stack **b, t_technical *t, int mid)
 		else if ((*a)->expected_pos > mid)
 		{
 			next_mid = (mid - t->as_alg.wanted_el) / 2 + t->as_alg.wanted_el;
-			rotations++;
+			rotated = ++rotations;
 			rotate(a, t, A);
-			if (*b && (*b)->expected_pos < next_mid && (*b)->expected_pos != t->as_alg.wanted_el)
+			if (*b && (*b)->expected_pos < next_mid
+				&& (*b)->expected_pos != t->as_alg.wanted_el)
 				rotate(b, t, B);
-			rotated = 1;
 		}
 		else
 			less_then_mid(a, b, t, &below_mid);

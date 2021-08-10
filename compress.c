@@ -2,12 +2,12 @@
 
 static int	change_two_on_one(t_inst **lst, t_inst **next, char *instruction)
 {
-	t_inst *lst_to_free;
-	t_inst *next_to_free;
-	t_inst *tmp;
+	t_inst	*lst_to_free;
+	t_inst	*next_to_free;
+	t_inst	*tmp;
 
 	if (!(*lst)->prev || !(*next)->next)
-		return(0);
+		return (0);
 	lst_to_free = *lst;
 	next_to_free = *next;
 	*lst = (*lst)->prev;
@@ -26,11 +26,11 @@ static int	change_two_on_one(t_inst **lst, t_inst **next, char *instruction)
 
 static int	remove_two(t_inst **lst, t_inst **next)
 {
-	t_inst *lst_to_free;
-	t_inst *next_to_free;
+	t_inst	*lst_to_free;
+	t_inst	*next_to_free;
 
 	if (!(*lst)->prev || !(*next)->next)
-		return(0);
+		return (0);
 	lst_to_free = *lst;
 	next_to_free = *next;
 	*lst = (*lst)->prev;
@@ -44,24 +44,32 @@ static int	remove_two(t_inst **lst, t_inst **next)
 
 static int	compress(t_inst **lst, t_inst **next)
 {
-	if ((!ft_strcmp((*lst)->instruction, RA) && !ft_strcmp((*next)->instruction, RB)) ||
-		(!ft_strcmp((*lst)->instruction, RB) && !ft_strcmp((*next)->instruction, RA)))
+	if ((!ft_strcmp((*lst)->instruction, RA)
+			&& !ft_strcmp((*next)->instruction, RB))
+		|| (!ft_strcmp((*lst)->instruction, RB)
+			&& !ft_strcmp((*next)->instruction, RA)))
 		return (change_two_on_one(lst, next, RR));
-	if ((!ft_strcmp((*lst)->instruction, RRA) && !ft_strcmp((*next)->instruction, RRB)) ||
-		(!ft_strcmp((*lst)->instruction, RRB) && !ft_strcmp((*next)->instruction, RRA)))
+	if ((!ft_strcmp((*lst)->instruction, RRA)
+			&& !ft_strcmp((*next)->instruction, RRB))
+		|| (!ft_strcmp((*lst)->instruction, RRB)
+			&& !ft_strcmp((*next)->instruction, RRA)))
 		return (change_two_on_one(lst, next, RRR));
-	if ((!ft_strcmp((*lst)->instruction, SA) && !ft_strcmp((*next)->instruction, SB)) ||
-		(!ft_strcmp((*lst)->instruction, SA) && !ft_strcmp((*next)->instruction, SA)))
+	if ((!ft_strcmp((*lst)->instruction, SA)
+			&& !ft_strcmp((*next)->instruction, SB))
+		|| (!ft_strcmp((*lst)->instruction, SA)
+			&& !ft_strcmp((*next)->instruction, SA)))
 		return (change_two_on_one(lst, next, SS));
-	if ((!ft_strcmp((*lst)->instruction, PB) && !ft_strcmp((*next)->instruction, PA)) ||
-		(!ft_strcmp((*lst)->instruction, PA) && !ft_strcmp((*next)->instruction, PB)))
+	if ((!ft_strcmp((*lst)->instruction, PB)
+			&& !ft_strcmp((*next)->instruction, PA))
+		|| (!ft_strcmp((*lst)->instruction, PA)
+			&& !ft_strcmp((*next)->instruction, PB)))
 		return (remove_two(lst, next));
-	return(0);
+	return (0);
 }
 
 void	inst_compress(t_inst *lst)
 {
-	t_inst *next;
+	t_inst	*next;
 	int		flag;
 
 	while (lst->next)

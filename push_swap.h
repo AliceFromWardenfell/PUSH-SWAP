@@ -8,7 +8,7 @@
 # define DEFAULT -1
 # define SORTED -2
 
-# define SA "sa\n" // ??
+# define SA "sa\n"
 # define SB	"sb\n"
 # define SS "ss\n"
 # define PA "pa\n"
@@ -21,8 +21,6 @@
 # define RRR "rrr\n"
 
 # include "libft/libft.h"
-
-# include <stdio.h> //remove
 
 typedef struct s_stack
 {

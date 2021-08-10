@@ -21,6 +21,7 @@
 # define RRR "rrr\n"
 
 # include "libft/libft.h"
+# include <stdio.h>
 
 typedef struct s_stack
 {

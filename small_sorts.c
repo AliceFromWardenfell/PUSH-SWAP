@@ -64,7 +64,7 @@ static void	sort_4_utils(t_stack **a, t_stack **b, t_technical *t, int pos)
 
 void	sort_4(t_stack **a, t_stack **b, t_technical *t, int num)
 {
-	t_stack *tmp;
+	t_stack	*tmp;
 	int		i;
 
 	tmp = *a;
@@ -85,7 +85,7 @@ void	sort_4(t_stack **a, t_stack **b, t_technical *t, int num)
 
 void	sort_5(t_stack **a, t_stack **b, t_technical *t)
 {
-	t_stack *tmp;
+	t_stack	*tmp;
 	int		i;
 	int		dir;
 
@@ -102,8 +102,8 @@ void	sort_5(t_stack **a, t_stack **b, t_technical *t)
 	while ((*a)->expected_pos != 1)
 		if (dir == UP)
 			rotate(a, t, A);
-		else if (dir == DOWN)
-			r_rotate(a, t, A);
+	else if (dir == DOWN)
+		r_rotate(a, t, A);
 	push(a, b, t, B);
 	sort_4(a, b, t, 2);
 	push(a, b, t, A);

@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-int		is_sorted(t_stack *a, int *arr)
+int	is_sorted(t_stack *a, int *arr)
 {
 	int		i;
 
@@ -39,7 +39,7 @@ static void	check_signs(char *str)
 				exit(error());
 }
 
-int		check_argv(t_stack *a, char *str)
+int	check_argv(t_stack *a, char *str)
 {
 	long int	val;
 

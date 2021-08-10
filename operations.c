@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	write_instructions(t_technical *t, char *instruction) // free it
+void	write_instructions(t_technical *t, char *instruction)
 {
 	addinstnode_back(&(t->inst), create_inst_node(instruction));
 }
@@ -75,11 +75,10 @@ void	push(t_stack **a, t_stack **b, t_technical *t, int stack)
 	}
 }
 
-
 void	swap(t_stack **a, t_technical *t, int stack)
 {
 	t_stack	*tmp;
-	
+
 	if (stack == A)
 		write_instructions(t, SA);
 	else if (stack == B)
@@ -92,4 +91,3 @@ void	swap(t_stack **a, t_technical *t, int stack)
 	tmp->next = *a;
 	*a = tmp;
 }
-

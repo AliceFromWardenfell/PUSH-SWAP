@@ -24,7 +24,7 @@
 
 # include <stdio.h> //remove
 
-typedef	struct		s_stack
+typedef struct s_stack
 {
 	int				val;
 	int				expected_pos;
@@ -32,20 +32,20 @@ typedef	struct		s_stack
 	struct s_stack	*next;
 }					t_stack;
 
-typedef	struct		s_as_alg
+typedef struct s_as_alg
 {
 	int				wanted_el;
 	int				global_tag;
 }					t_as_alg;
 
-typedef	struct		s_inst
+typedef struct s_inst
 {
 	char			*instruction;
 	struct s_inst	*next;
 	struct s_inst	*prev;
 }					t_inst;
 
-typedef	struct		s_technical
+typedef struct s_technical
 {
 	int				a_num;
 	int				b_num;
@@ -57,7 +57,7 @@ typedef	struct		s_technical
 
 t_stack	*create_node(int val);
 void	addnode_back(t_stack **lst, t_stack *new);
-t_inst	*create_inst_node(char* val);
+t_inst	*create_inst_node(char *val);
 void	addinstnode_back(t_inst **lst, t_inst *new);
 void	print_list(t_stack *a, t_technical *t, int flag); // remove
 void	print_ab(t_stack *a, t_stack *b, t_technical *t); // remove

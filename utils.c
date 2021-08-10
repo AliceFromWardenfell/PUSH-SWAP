@@ -25,7 +25,7 @@ void	print_arr(int *a, int size)
 	int		i;
 
 	i = -1;
-	while(++i < size)
+	while (++i < size)
 		printf("%d. %d\n", i, a[i]);
 }
 
@@ -36,7 +36,7 @@ void	print_list(t_stack *a, t_technical *t, int stack)
 	else if (stack == B)
 		printf("B: ");
 	printf("HEAD ");
-	while(a)
+	while (a)
 	{
 		printf("%d ", a->val);
 		a = a->next;

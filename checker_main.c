@@ -3,27 +3,27 @@
 static char	*check_instruction(char *inst)
 {
 	if (!ft_strcmp(inst, "pa"))
-		return(PA);
+		return (PA);
 	if (!ft_strcmp(inst, "pb"))
-		return(PB);
+		return (PB);
 	if (!ft_strcmp(inst, "sa"))
-		return(SA);
+		return (SA);
 	if (!ft_strcmp(inst, "sb"))
-		return(SB);
+		return (SB);
 	if (!ft_strcmp(inst, "ss"))
-		return(SS);
+		return (SS);
 	if (!ft_strcmp(inst, "ra"))
-		return(RA);
+		return (RA);
 	if (!ft_strcmp(inst, "rb"))
-		return(RB);
+		return (RB);
 	if (!ft_strcmp(inst, "rr"))
-		return(RR);
+		return (RR);
 	if (!ft_strcmp(inst, "rra"))
-		return(RRA);
+		return (RRA);
 	if (!ft_strcmp(inst, "rrb"))
-		return(RRB);
+		return (RRB);
 	if (!ft_strcmp(inst, "rrr"))
-		return(RRR);
+		return (RRR);
 	exit(error());
 }
 
@@ -37,23 +37,15 @@ static void	scan_instructions(t_technical *t)
 	{
 		if (gnl_ret == -1)
 			exit(error());
-		addinstnode_back(&(t->inst_ch), create_inst_node(check_instruction(buf)));
+		addinstnode_back(&(t->inst_ch),
+			create_inst_node(check_instruction(buf)));
 		free(buf);
 		gnl_ret = get_next_line(0, &buf);
 	}
 	free(buf);
 }
 
-void print_inst_stack(t_inst *tmp) // rm
-{
-	while(tmp)
-	{
-		printf("%s", tmp->instruction);
-		tmp = tmp->next;
-	}
-}
-
-static void double_ones(t_stack **a, t_stack **b, t_technical *t, t_inst *tmp)
+static void	double_ones(t_stack **a, t_stack **b, t_technical *t, t_inst *tmp)
 {
 	if (!ft_strcmp(tmp->instruction, RR))
 	{
@@ -72,7 +64,8 @@ static void double_ones(t_stack **a, t_stack **b, t_technical *t, t_inst *tmp)
 	}
 }
 
-static void	do_instructions(t_stack **a, t_stack **b, t_technical *t, t_inst *tmp)
+static void	do_instructions(t_stack **a, t_stack **b,
+							t_technical *t, t_inst *tmp)
 {
 	while (tmp)
 	{
@@ -97,13 +90,11 @@ static void	do_instructions(t_stack **a, t_stack **b, t_technical *t, t_inst *tm
 	}
 }
 
-
-
 int	main(int argc, char **argv)
 {
 	t_stack		*a;
 	t_stack		*b;
-	t_technical t;
+	t_technical	t;
 	int			sorted;
 
 	init(&a, &b, &t, argc);
@@ -119,9 +110,7 @@ int	main(int argc, char **argv)
 			ft_putstr("OK\n");
 		else
 			ft_putstr("KO\n");
-		// print_ab(a, b, &t);
-		//print_inst_stack(t.inst);
 	}
 	clean(&a, &b, &t);
 	return (0);
-}
+}	

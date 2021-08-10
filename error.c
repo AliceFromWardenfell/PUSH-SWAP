@@ -4,10 +4,9 @@ void	clean(t_stack **a, t_stack **b, t_technical *t)
 {
 	t_stack	*to_free;
 	t_inst	*_to_free;
-	
-	free(t->instructions);
-	free(t->original_arr);
-	free(t->sorted_arr);
+
+	if (t->sorted_arr)
+		free(t->sorted_arr);
 	while (*a)
 	{
 		to_free = *a;
@@ -24,6 +23,12 @@ void	clean(t_stack **a, t_stack **b, t_technical *t)
 	{
 		_to_free = t->inst;
 		t->inst = t->inst->next;
+		free(_to_free);
+	}
+	while (t->inst_ch)
+	{
+		_to_free = t->inst_ch;
+		t->inst_ch = t->inst_ch->next;
 		free(_to_free);
 	}
 }

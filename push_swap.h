@@ -49,14 +49,10 @@ typedef	struct		s_technical
 {
 	int				a_num;
 	int				b_num;
-	char			*instructions;
-	int				amount_of_instructions;
-	int				amount_of_allmem;
-	int				last_inst_position;
-	int				*original_arr; //rm
 	int				*sorted_arr;
 	struct s_as_alg	as_alg;
 	struct s_inst	*inst;
+	struct s_inst	*inst_ch;
 }					t_technical;
 
 t_stack	*create_node(int val);
@@ -87,5 +83,8 @@ void	inst_compress(t_inst *lst);
 void	print_instructions(t_inst *inst);
 void	clean(t_stack **a, t_stack **b, t_technical *t);
 void	heap_sort(int *arr, int arr_size);
+void	fill_stack_and_arr(t_stack **a, t_technical *t, int argc, char **argv);
+void	init(t_stack **a, t_stack **b, t_technical *t, int argc);
+void	assign_expected_positions(t_stack *a, t_technical *t);
 
 #endif

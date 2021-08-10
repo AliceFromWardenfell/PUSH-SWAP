@@ -7,7 +7,7 @@ int		is_sorted(t_stack *a, int *arr)
 	i = 0;
 	while (a)
 	{
-		if (a->expected_pos != arr[i])
+		if (a->val != arr[i])
 			return (0);
 		a = a->next;
 		i++;

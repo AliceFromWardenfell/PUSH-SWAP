@@ -45,6 +45,13 @@ typedef struct s_inst
 	struct s_inst	*prev;
 }					t_inst;
 
+typedef struct s_split
+{
+	int				below_mid;
+	int				rotations;
+	int				next_mid;
+}					t_split;
+
 typedef struct s_technical
 {
 	int				a_num;
@@ -53,6 +60,7 @@ typedef struct s_technical
 	struct s_as_alg	as_alg;
 	struct s_inst	*inst;
 	struct s_inst	*inst_ch;
+	struct s_split	split;
 }					t_technical;
 
 t_stack	*create_node(int val);
@@ -86,5 +94,6 @@ void	heap_sort(int *arr, int arr_size);
 void	fill_stack_and_arr(t_stack **a, t_technical *t, int argc, char **argv);
 void	init(t_stack **a, t_stack **b, t_technical *t, int argc);
 void	assign_expected_positions(t_stack *a, t_technical *t);
+int		split_a(t_stack **a, t_stack **b, t_technical *t, int mid);
 
 #endif

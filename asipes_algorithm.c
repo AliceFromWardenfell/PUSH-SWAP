@@ -1,41 +1,5 @@
 #include "push_swap.h"
 
-static int	split_a(t_stack **a, t_stack **b, t_technical *t, int mid)
-{
-	int		rotations;
-	int		k;
-	int		rotated;
-	int		next_mid;
-	int		below_mid;
-
-	rotated = 0;
-	k = (t->a_num + t->b_num) - t->as_alg.wanted_el + 1;
-	below_mid = (k + 1) / 2;
-	rotations = 0;
-	while (k-- && below_mid)
-		if (((*a)->expected_pos == t->as_alg.wanted_el) && !rotated)
-		{
-			t->as_alg.wanted_el++;
-			(*a)->curr_tag = SORTED;
-			rotate(a, t, A);
-		}
-		else if ((*a)->expected_pos > mid)
-		{
-			next_mid = (mid - t->as_alg.wanted_el) / 2 + t->as_alg.wanted_el;
-			rotations++;
-			rotate(a, t, A);
-			if (*b && (*b)->expected_pos < next_mid && (*b)->expected_pos != t->as_alg.wanted_el)
-				rotate(b, t, B);
-			rotated = 1;
-		}
-		else
-		{
-			below_mid--;
-			push(a, b, t, B);
-		}
-	return (rotations);
-}
-
 static void	align_a(t_stack **a, t_stack **b, t_technical *t, int k)
 {
 	int		dir;
@@ -71,7 +35,7 @@ static void	push_or_rotate(t_stack **a, t_stack **b, t_technical *t, int mid)
 		push(a, b, t, A);
 		rotate(a, t, A);
 	}
-	else if ((*b)->expected_pos < mid) // add -1 or make <= and check generator
+	else if ((*b)->expected_pos <= mid)
 		rotate(b, t, B);
 	else
 	{

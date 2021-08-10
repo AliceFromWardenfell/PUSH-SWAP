@@ -10,6 +10,7 @@ RM		=	rm -f
 
 SRCS	=	error.c \
 			check.c \
+			split_and_align_a.c \
 			filling_stack.c \
 			list_functions.c \
 			operations.c \

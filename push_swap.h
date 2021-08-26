@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alisa <alisa@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/26 21:49:17 by alisa             #+#    #+#             */
+/*   Updated: 2021/08/26 21:49:18 by alisa            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
@@ -21,7 +33,6 @@
 # define RRR "rrr\n"
 
 # include "libft/libft.h"
-# include <stdio.h>
 
 typedef struct s_stack
 {
@@ -66,19 +77,14 @@ t_stack	*create_node(int val);
 void	addnode_back(t_stack **lst, t_stack *new);
 t_inst	*create_inst_node(char *val);
 void	addinstnode_back(t_inst **lst, t_inst *new);
-void	print_list(t_stack *a, t_technical *t, int flag); // remove
-void	print_ab(t_stack *a, t_stack *b, t_technical *t); // remove
-void	print_arr(int *a, int size); // remove
 int		error(void);
-int		check_argv(t_stack *a, char *str);
+int		check_argv(char *str);
 void	check_doubles(int *arr, int size, int sorted);
 int		is_sorted(t_stack *a, int *arr);
 void	swap(t_stack **a, t_technical *t, int stack);
 void	push(t_stack **a, t_stack **b, t_technical *t, int stack);
 void	rotate(t_stack **a, t_technical *t, int stack);
 void	r_rotate(t_stack **a, t_technical *t, int stack);
-void	alg1(t_stack **a, t_stack **b, t_technical *t); // perhaps tmp
-void	algorithm_1(t_stack **a, t_stack **b, t_technical *t); // ?
 void	radix_algorithm(t_stack **a, t_stack **b, t_technical *t);
 void	asipes_algorithm(t_stack **a, t_stack **b, t_technical *t);
 void	sort_3_b(t_stack **a, t_stack **b, t_technical *t);
@@ -91,7 +97,7 @@ void	print_instructions(t_inst *inst);
 void	clean(t_stack **a, t_stack **b, t_technical *t);
 void	heap_sort(int *arr, int arr_size);
 void	fill_stack_and_arr(t_stack **a, t_technical *t, int argc, char **argv);
-void	init(t_stack **a, t_stack **b, t_technical *t, int argc);
+void	init(t_stack **a, t_stack **b, t_technical *t);
 void	assign_expected_positions(t_stack *a, t_technical *t);
 int		split_a(t_stack **a, t_stack **b, t_technical *t, int mid);
 

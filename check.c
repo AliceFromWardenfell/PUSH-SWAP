@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alisa <alisa@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/26 21:48:12 by alisa             #+#    #+#             */
+/*   Updated: 2021/08/26 22:14:52 by alisa            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	is_sorted(t_stack *a, int *arr)
@@ -33,13 +45,12 @@ static void	check_signs(char *str)
 		exit(error());
 	if ((str[0] == '+' || str[0] == '-') && str[1] == '\0')
 		exit(error());
-	if (str[0] == '+' || str[0] == '-')
-		while (str[++i])
-			if (!ft_isdigit(str[i]))
-				exit(error());
+	while (str[++i])
+		if (!ft_isdigit(str[i]))
+			exit(error());
 }
 
-int	check_argv(t_stack *a, char *str)
+int	check_argv(char *str)
 {
 	long int	val;
 

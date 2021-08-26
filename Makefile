@@ -2,10 +2,9 @@ NAME_PS	=	push_swap
 NAME_CH =	checker
 
 CC		=	gcc
-CFLAGS	=	-g # add flags
+CFLAGS	=	-Wall -Wextra -Werror
 HDRS	=	push_swap.h
 LIBFT	=	-L libft -lft
-OBJ_DIR	=	.objects
 RM		=	rm -f
 
 SRCS	=	error.c \
@@ -16,7 +15,6 @@ SRCS	=	error.c \
 			operations.c \
 			utils.c \
 			heapsort.c \
-			radix_algorithm.c \
 			asipes_algorithm.c \
 			small_sorts.c \
 			small_sorts_b.c \
@@ -26,12 +24,12 @@ SRCS_PS	=	main.c
 
 SRCS_CH	=	checker_main.c
 
-OBJS_PS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRCS) $(SRCS_PS))
+OBJS_PS = $(patsubst %.c, %.o, $(SRCS) $(SRCS_PS))
 
-OBJS_CH = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRCS) $(SRCS_CH))
+OBJS_CH = $(patsubst %.c, %.o, $(SRCS) $(SRCS_CH))
 
-$(OBJ_DIR)/%.o: %.c
-			${CC} ${CFLAGS} -c $< -o $@			
+%.o: %.c ${HDRS}
+			${CC} ${CFLAGS} -c $< -o $@
 
 all:		${NAME_PS}
 

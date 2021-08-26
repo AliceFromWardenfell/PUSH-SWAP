@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alisa <alisa@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/26 21:48:32 by alisa             #+#    #+#             */
+/*   Updated: 2021/08/26 21:48:43 by alisa            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void	clean_utils(t_stack **a, t_stack **b, t_technical *t)
+void	clean_utils(t_technical *t)
 {
 	t_inst	*to_free;
 
@@ -36,7 +48,7 @@ void	clean(t_stack **a, t_stack **b, t_technical *t)
 		*b = (*b)->next;
 		free(to_free);
 	}
-	clean_utils(a, b, t);
+	clean_utils(t);
 }
 
 int	error(void)

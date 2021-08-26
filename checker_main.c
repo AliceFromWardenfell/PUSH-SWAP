@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker_main.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alisa <alisa@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/26 21:48:24 by alisa             #+#    #+#             */
+/*   Updated: 2021/08/26 21:48:50 by alisa            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 static char	*check_instruction(char *inst)
@@ -95,9 +107,8 @@ int	main(int argc, char **argv)
 	t_stack		*a;
 	t_stack		*b;
 	t_technical	t;
-	int			sorted;
 
-	init(&a, &b, &t, argc);
+	init(&a, &b, &t);
 	if (argc > 1)
 	{
 		fill_stack_and_arr(&a, &t, argc, argv);

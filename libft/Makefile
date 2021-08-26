@@ -6,7 +6,7 @@
 #    By: alisa <alisa@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/06 18:44:53 by alisa             #+#    #+#              #
-#    Updated: 2021/08/10 08:29:11 by alisa            ###   ########.fr        #
+#    Updated: 2021/08/10 08:48:59 by alisa            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC =	ft_putchar.c ft_putstr.c ft_strlen.c ft_putnbr.c ft_strcmp.c \
 		ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstmap.c \
 		ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c
 
-SRC_GNL = get_next_line.c get_next_line_utils.c get_next_line_utils2.c
+SRC_GNL = get_next_line.c get_next_line_utils.c
 
 OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC) $(SRC_GNL))
 

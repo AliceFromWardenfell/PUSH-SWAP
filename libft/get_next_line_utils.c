@@ -5,108 +5,79 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alisa <alisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/06 10:51:01 by cvrone            #+#    #+#             */
-/*   Updated: 2021/08/10 07:40:35 by alisa            ###   ########.fr       */
+/*   Created: 2020/12/22 20:51:21 by airon             #+#    #+#             */
+/*   Updated: 2021/08/10 08:46:03 by alisa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-void	ft_strcpy(char *dest, char *src)
+t_gnl_list	*gnl_lstnew(int fd)
 {
-	unsigned int	index;
+	t_gnl_list	*res;
 
-	index = 0;
-	while (src[index] != '\0')
+	res = (t_gnl_list *)malloc(sizeof(t_gnl_list));
+	if (!res)
+		return (NULL);
+	res->fd = fd;
+	res->buffer_start = (char *)malloc(33);
+	if (!res->buffer_start)
 	{
-		dest[index] = src[index];
-		index++;
+		free(res);
+		return (NULL);
 	}
-	dest[index] = '\0';
+	res->buffer_start[0] = '\0';
+	res->buffer = res->buffer_start;
+	res->next = NULL;
+	return (res);
 }
 
-int	ft_useless(char **endl_ptr, char *buf, char **beyond, char **line)
+t_gnl_list	*gnl_lstfind(int fd, t_gnl_list *start)
 {
-	*endl_ptr = ft_strchr(buf, '\n');
-	if (*endl_ptr)
+	while (start->fd != fd && start->next)
+		start = start->next;
+	if (start->fd == fd)
+		return (start);
+	else
 	{
-		*endl_ptr[0] = '\0';
-		(*endl_ptr)++;
-		*beyond = ft_strdup(*endl_ptr);
-		if (!*beyond)
-			return (-1);
+		start->next = gnl_lstnew(fd);
+		return (start->next);
 	}
-	*line = ft_strjoin_m(*line, buf, 0, 0);
-	if (!*line)
+}
+
+void	gnl_lstdel(t_gnl_list **start, int fd)
+{
+	t_gnl_list	*tmp1;
+	t_gnl_list	*tmp2;
+
+	tmp1 = *start;
+	tmp2 = NULL;
+	while (tmp1->fd != fd)
 	{
-		if (*beyond != NULL)
-			free(*beyond);
-		return (-1);
+		tmp2 = tmp1;
+		tmp1 = tmp1->next;
+	}
+	if (!tmp2)
+	{
+		*start = tmp1->next;
+		free(tmp1->buffer_start);
+		free(tmp1);
+	}
+	else
+	{
+		tmp2->next = tmp1->next;
+		free(tmp1->buffer_start);
+		free(tmp1);
+	}
+}
+
+int	check_n(int n, char **line)
+{
+	if (n < 0)
+	{
+		free(*line);
+		*line = NULL;
+		return (1);
 	}
 	return (0);
-}
-
-char	*ft_strjoin_m(const char *s1, const char *s2, int len1, int len2)
-{
-	int				index;
-	char			*join;
-
-	while (s1[len1] != '\0')
-		len1++;
-	while (s2[len2] != '\0')
-		len2++;
-	join = malloc((len1 + len2 + 1) * sizeof(*s1));
-	if (!join)
-		return (NULL);
-	index = 0;
-	while (index != len1)
-	{
-		join[index] = s1[index];
-		index++;
-	}
-	while (index != len1 + len2)
-	{
-		join[index] = s2[index - len1];
-		index++;
-	}
-	join[index] = '\0';
-	return (join);
-}
-
-char	*ft_strdup(const char *str)
-{
-	int				index;
-	char			*cp;
-	int				len;
-
-	len = 0;
-	while (str[len] != '\0')
-		len++;
-	cp = (char *)malloc((len + 1) * sizeof(*str));
-	if (!cp)
-		return (NULL);
-	index = 0;
-	while (index != len)
-	{
-		cp[index] = str[index];
-		index++;
-	}
-	cp[index] = '\0';
-	return (cp);
-}
-
-char	*ft_strchr(const char *str, int chr)
-{
-	unsigned int	index;
-
-	index = 0;
-	while (str[index] != '\0')
-	{
-		if (str[index] == chr)
-			return ((char *)&str[index]);
-		index++;
-	}
-	if (chr == '\0')
-		return ((char *)&str[index]);
-	return (NULL);
 }

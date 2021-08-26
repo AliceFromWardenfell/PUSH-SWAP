@@ -3,138 +3,112 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alisa <alisa@student.42.fr>                +#+  +:+       +#+        */
+/*   By: airon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/17 22:15:38 by cvrone            #+#    #+#             */
-/*   Updated: 2021/08/10 08:36:44 by alisa            ###   ########.fr       */
+/*   Created: 2020/12/22 20:50:58 by airon             #+#    #+#             */
+/*   Updated: 2020/12/22 20:51:00 by airon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
+#include <unistd.h>
 
-char	*beyond_var(char **line, char **beyond, char **malloc_flag)
+static char	*strjoin_free(char *line, char *buffer)
 {
-	char			*endl_ptr;
+	char	*tmp;
 
-	endl_ptr = NULL;
-	if (*beyond)
-		if ((endl_ptr = ft_strchr(*beyond, '\n')))
-		{
-			endl_ptr[0] = '\0';
-			if (!(*line = ft_strdup(*beyond)))
-				return (*malloc_flag = NULL);
-			ft_strcpy(*beyond, ++endl_ptr);
-		}
-		else
-		{
-			if (!(*line = ft_strdup(*beyond)))
-				return (*malloc_flag = NULL);
-			free(*beyond);
-			*beyond = NULL;
-		}
-	else
-	{
-		if (!(*line = (char*)malloc(sizeof(char) * 1)))
-			return (*malloc_flag = NULL);
-		*line[0] = '\0';
-	}
-	return (endl_ptr);
+	tmp = line;
+	line = ft_strjoin(tmp, buffer);
+	free(tmp);
+	return (line);
 }
 
-int		core(int fd, char **line, char **beyond)
+static int	new_line_check(t_gnl_list *current, char **line)
 {
-	int				read_ret;
-	char			*buf;
-	char			*endl_ptr;
-	char			*tmp;
-	char			*malloc_flag;
+	char	*tmp;
 
-	if (!(buf = malloc((BUFFER_SIZE + 1) * sizeof(*buf))))
+	tmp = current->buffer;
+	current->buffer = ft_strchr(current->buffer, '\n');
+	if (current->buffer)
+	{
+		*(current->buffer) = '\0';
+		*line = strjoin_free(*line, tmp);
+		if (!*line)
+		{
+			*(current->buffer) = '\n';
+			current->buffer = tmp;
+			return (1);
+		}
+		(current->buffer)++;
+		return (1);
+	}
+	current->buffer = tmp;
+	return (0);
+}
+
+static int	line_reader(t_gnl_list *current, int fd, char **line)
+{
+	int	n;
+
+	if (new_line_check(current, line))
+		return (1);
+	*line = strjoin_free(*line, current->buffer);
+	if (!(*line))
+		return (1);
+	n = read(fd, current->buffer_start, 32);
+	while (n > 0)
+	{
+		current->buffer_start[n] = '\0';
+		current->buffer = current->buffer_start;
+		if (new_line_check(current, line))
+			return (1);
+		*line = strjoin_free(*line, current->buffer_start);
+		if (!(*line))
+			return (1);
+		n = read(fd, current->buffer_start, 32);
+	}
+	if (check_n(n, line))
+		return (1);
+	return (0);
+}
+
+int	line_start_check(int fd, char **line, t_gnl_list **start)
+{
+	if (!line)
 		return (-1);
-	read_ret = 0;
-	malloc_flag = "true";
-	endl_ptr = beyond_var(line, beyond, &malloc_flag);
-	if (!*malloc_flag)
+	*line = NULL;
+	if (fd < 0)
 		return (-1);
-	while (!endl_ptr && (read_ret = read(fd, buf, BUFFER_SIZE)))
-	{
-		buf[read_ret] = '\0';
-		tmp = *line;
-		if (ft_useless(&endl_ptr, buf, beyond, line) == -1)
+	if (!(*start))
+	{	
+		*start = gnl_lstnew(fd);
+		if (!(*start))
 			return (-1);
-		free(tmp);
 	}
-	free(buf);
-	return (read_ret || *beyond);
+	return (0);
 }
 
-t_gnl	*new_el(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
-	t_gnl		*elem;
-	char		buf[1];
+	static t_gnl_list	*start;
+	t_gnl_list			*current;
 
-	if (!(elem = (t_gnl*)malloc(sizeof(t_gnl))))
-		return (NULL);
-	elem->fd = fd;
-	elem->beyond = NULL;
-	elem->next = NULL;
-	if (fd < 0 || line == NULL || (read(fd, buf, 0) == -1) || BUFFER_SIZE < 1)
+	if (line_start_check(fd, line, &start) == -1)
+		return (-1);
+	current = gnl_lstfind(fd, start);
+	if (!current)
+		return (-1);
+	*line = (char *)malloc(1);
+	if (!(*line))
+		return (-1);
+	*line[0] = '\0';
+	if (!line_reader(current, fd, line))
 	{
-		free(elem);
-		return (NULL);
+		gnl_lstdel(&start, fd);
+		return (0);
 	}
-	return (elem);
-}
-
-void	ft_dellst(t_gnl **head, t_gnl *todel)
-{
-	t_gnl			*tmp;
-
-	tmp = *head;
-	if (*head == todel)
-	{
-		if ((*head)->next == NULL)
-		{
-			free(*head);
-			*head = NULL;
-		}
-		else
-		{
-			*head = (*head)->next;
-			free(tmp);
-		}
-	}
+	else if (!*line)
+		return (-1);
 	else
-	{
-		while (tmp->next != todel)
-			tmp = tmp->next;
-		tmp->next = todel->next;
-		free(todel);
-	}
-}
-
-int		get_next_line(int fd, char **line)
-{
-	static t_gnl	*head;
-	t_gnl			*tmp;
-	int				gnl_ret;
-
-	if (head == NULL)
-		if (!(head = new_el(fd, line)))
-		{
-			return (-1);
-		}
-	tmp = head;
-	while (tmp->fd != fd)
-	{
-		if (!tmp->next)
-			if (!(tmp->next = new_el(fd, line)))
-				return (-1);
-		tmp = tmp->next;
-	}
-	if ((gnl_ret = core(tmp->fd, line, &tmp->beyond)) < 1)
-	{
-		ft_dellst(&head, tmp);
-	}
-	return (gnl_ret);
+		return (1);
 }

@@ -6,14 +6,13 @@
 /*   By: alisa <alisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 18:55:07 by alisa             #+#    #+#             */
-/*   Updated: 2021/08/10 07:43:15 by alisa            ###   ########.fr       */
+/*   Updated: 2021/08/10 08:45:58 by alisa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include "get_next_line.h"
 # include <stdlib.h>
 # include <stddef.h>
 # include <unistd.h>
@@ -24,6 +23,14 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct s_gnl_list
+{
+	int					fd;
+	char				*buffer_start;
+	char				*buffer;
+	struct s_gnl_list	*next;
+}	t_gnl_list;
 
 void				ft_swap(int *a, int *b);
 int					ft_strncmp(char *s1, char *s2, size_t n);
@@ -75,5 +82,10 @@ void				ft_lstclear(t_list **lst, void (*del)(void*));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst,
 						void *(*f)(void *), void (*del)(void *));
+int					get_next_line(int fd, char **line);
+t_gnl_list			*gnl_lstnew(int fd);
+t_gnl_list			*gnl_lstfind(int fd, t_gnl_list *start);
+void				gnl_lstdel(t_gnl_list **start, int fd);
+int					check_n(int n, char **line);
 
 #endif

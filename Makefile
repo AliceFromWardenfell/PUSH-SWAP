@@ -1,13 +1,19 @@
-NAME_PS	=	push_swap
-NAME_CH =	checker
+NAME		:= push_swap
+HDRS		:= push_swap.h
 
-CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror
-HDRS	=	push_swap.h
-LIBFT	=	-L libft -lft
-RM		=	rm -f
+CC			:= gcc
+CFLAGS		:= -Wall -Wextra -Werror
 
-SRCS	=	error.c \
+LFT_PATH	:= libft
+LIBFT		:= $(LFT_PATH)/libft.a
+
+SRCS_DIR	:= sources
+HDRS_DIR	:= headers
+vpath %.c	$(SRCS_DIR)
+vpath %.h	$(HDRS_DIR)
+INCLUDES	:= -I$(HDRS_DIR) -I$(LFT_PATH)
+
+SRCS		:= error.c \
 			check.c \
 			split_and_align_a.c \
 			filling_stack.c \
@@ -18,35 +24,46 @@ SRCS	=	error.c \
 			asipes_algorithm.c \
 			small_sorts.c \
 			small_sorts_b.c \
-			compress.c
+			compress.c \
+			main.c
 
-SRCS_PS	=	main.c
+OBJS_DIR	:= .objects
+OBJS		:= $(SRCS:%.c=$(OBJS_DIR)/%.o)
 
-SRCS_CH	=	checker_main.c
+all:				libft
+					@echo "$(BOLD)Creating/updating '$(NAME)'...$(DEF)"
+					@$(MAKE) --no-print-directory $(NAME)
 
-OBJS_PS = $(patsubst %.c, %.o, $(SRCS) $(SRCS_PS))
+$(NAME):			$(OBJS) $(LIBFT)
+					@echo "$(BOLD)Linking files...$(DEF)"
+					@$(CC) $(OBJS) $(CFLAGS) $(INCLUDES) -o $@ $(LIBFT)
+					@echo "$(BOLD)'$(NAME)' has been created/updated.$(DEF)"
 
-OBJS_CH = $(patsubst %.c, %.o, $(SRCS) $(SRCS_CH))
+$(OBJS_DIR)/%.o:	%.c $(HDRS) $(LIBFT) | $(OBJS_DIR)
+					@echo "Assembling $<..."
+					@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-%.o: %.c ${HDRS}
-			${CC} ${CFLAGS} -c $< -o $@
+$(OBJS_DIR):
+					@mkdir -p $@
+					@echo "$(BOLD)Directory '$(OBJS_DIR)' has been created.$(DEF)"
 
-all:		${NAME_PS}
-
-$(NAME_PS):	${OBJS_PS} ${HDRS} ${LIBS}
-			$(MAKE) -C libft
-			${CC} ${CFLAGS} ${OBJS_PS} ${LIBS} ${LIBFT} -o ${NAME_PS}
-
-$(NAME_CH):	${OBJS_CH} ${HDRS} ${LIBS}
-			$(MAKE) -C libft
-			${CC} ${CFLAGS} ${OBJS_CH} ${LIBS} ${LIBFT} -o ${NAME_CH}
+libft:
+					@$(MAKE) --no-print-directory -C $(LFT_PATH)
 
 clean:
-			${RM} ${OBJS_PS} ${OBJS_CH}
+					@$(MAKE) --no-print-directory clean -C $(LFT_PATH)
+					@rm -rf $(OBJS)
+					@echo "$(NAME): $(BOLD)Object files have been cleaned.$(DEF)"
 
-fclean:		clean
-			${RM} ${NAME_PS} ${NAME_CH}
+fclean:				clean
+					@rm -rf $(LIBFT)
+					@echo "$(BOLD)'$(LIBFT)' has been cleaned.$(DEF)"
+					@rm -rf $(NAME)
+					@echo "$(BOLD)'$(NAME)' has been cleaned.$(DEF)"
 
-re:			fclean all
+re:					fclean all
 
-.PHONY:		all clean lftclean fclean re
+.PHONY:				all clean fclean re libft
+
+BOLD=\033[1m
+DEF=\033[0;39m

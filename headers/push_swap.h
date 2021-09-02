@@ -6,7 +6,7 @@
 /*   By: alisa <alisa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 21:49:17 by alisa             #+#    #+#             */
-/*   Updated: 2021/08/26 21:49:18 by alisa            ###   ########.fr       */
+/*   Updated: 2021/09/02 01:13:41 by alisa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define RRB "rrb\n"
 # define RRR "rrr\n"
 
-# include "libft/libft.h"
+# include "../libft/headers/libft.h"
 
 typedef struct s_stack
 {

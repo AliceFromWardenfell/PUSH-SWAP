@@ -65,5 +65,5 @@ re:					fclean all
 
 .PHONY:				all clean fclean re libft
 
-BOLD=\033[1m
-DEF=\033[0;39m
+BOLD	:= \033[1m
+DEF		:= \033[0;39m
